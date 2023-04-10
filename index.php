@@ -183,7 +183,7 @@
     });
     var infoWindow = new google.maps.InfoWindow;
 
-  downloadUrl('http://localhost/gmaps/data-json.php', function(data) {
+  downloadUrl('https://gis.sacode.web.id/data-json.php', function(data) {
 
     var markers=JSON.parse(data.responseText);
 
