@@ -62,7 +62,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tempat Wisata</title>
+    <title>GIS Demo 
+Medicinal Plants in Papua</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -93,7 +94,8 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand p-3 fw-bolder" href="#">Pemetaan Tempat Wisata </a>
+            <a class="navbar-brand p-3 fw-bolder" href="#">GIS Demo 
+Medicinal Plants in Papua </a>
             </div>
         </div>
     </nav>
@@ -101,7 +103,8 @@
     <!-- Content -->
     <div class="row mt-3 text-center mb-5">
         <div class="col-12">
-            <h2 class="fw-bolder">PETA TEMPAT WISATA</h2>
+            <h2 class="fw-bolder">GIS Demo 
+Medicinal Plants in Papua </h2>
         </div>
     </div>
     <div id="map" class="p-5 mb-5 mt-5"></div>
