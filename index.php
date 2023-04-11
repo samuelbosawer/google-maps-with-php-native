@@ -215,6 +215,14 @@ Medicinal Plants in Papua </h2>
         });
         marker.addListener('mouseover', function() {
           infoWindow.setContent(infowincontent);
+         
+         return function() {
+                    infowindow.setContent(
+                     <div class="card border-dark mb-10" style="max-width: 18rem;">
+                     <div class="card-header">
+                     <h6>tes </h6>
+                    );
+          
           infoWindow.open(map, marker);
         });
     });
