@@ -112,7 +112,8 @@ Medicinal Plants in Papua </h2>
     <div class="container">
         <div class="row mt-5 text-center ">
             <div class="col">
-                <h2 class="fw-bolder">DATA TEMPAT WISATA</h2>
+                <h2 class="fw-bolder">GIS Demo 
+Medicinal Plants in Papua </h2>
             </div>
         </div>
         <div class="row mt-5">
@@ -124,7 +125,7 @@ Medicinal Plants in Papua </h2>
                             <input type="text" class="form-control" id="namaTempat" name="nama_tempat" required placeholder="masukan nama tempat">
                         </div>
                             <div class="mb-3">
-                            <label for="alamat" class="form-label">Alamat</label>
+                            <label for="alamat" class="form-label">Keterangan</label>
                             <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
                         </div>  
                         <div class="mb-3">
@@ -147,7 +148,7 @@ Medicinal Plants in Papua </h2>
                         <tr class="bg-dark text-white text-center">
                             <th>No</th>
                             <th>Nama Tempat</th>
-                            <th>Alamat</th>
+                            <th>Keterangan</th>
                             <th>Long</th>
                             <th>Lat</th>
                             <th></th>
