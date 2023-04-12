@@ -200,24 +200,22 @@ Medicinal Plants in Papua </h2>
             parseFloat(element.long));
 
         var infowincontent = document.createElement('div');
-        var strong = document.createElement('strong');
-        strong.textContent = nama_pariwisata
-        infowincontent.appendChild(strong);
-        infowincontent.appendChild(document.createElement('br'));
+              var strong = document.createElement('strong');
+              strong.textContent = nama_tempat
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
 
-        var text = document.createElement('text');
-        text.textContent = alamat
-        infowincontent.appendChild(text);
-        var marker = new google.maps.Marker({
-          map: map,
-          position: point,
-        
-        });
-        marker.addListener('mouseover', function() 
-          infoWindow.setContent(infowincontent);
-          infoWindow.open(map, marker);
-        });
-    });
+              var text = document.createElement('text');
+              text.textContent = alamat
+              infowincontent.appendChild(text);
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+              });
     
   });
 }
