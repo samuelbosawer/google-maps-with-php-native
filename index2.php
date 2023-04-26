@@ -142,7 +142,7 @@ Medicinal Plants in Papua </h2>
                             <select class="form-select form-select-lg" name="id_icon" id="">
                                 <option value="2">Daun merah </option>
                                 <option value="1">Pohon hijau</option>
-                                <option value="3">Bendera Merahs</option>
+                                <option value="3">Bendera Merah</option>
                                 <option value="4">Bendera hijau</option>
                             </select>
                         </div>
