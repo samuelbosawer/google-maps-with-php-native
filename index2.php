@@ -11,9 +11,10 @@
     $alamat = $_POST['alamat'];
     $long = $_POST['long'];
     $lat = $_POST['lat'];
+    $id_icon = $_POST['id_icon'];
 
-    $insert = "INSERT INTO pariwisata (`nama_tempat`, `alamat`, `lat`, `long`)
-    VALUES ('$nama_tempat', '$alamat', '$lat', '$long')";
+    $insert = "INSERT INTO pariwisata (`nama_tempat`, `alamat`, `lat`, `long`, `id_icon`)
+    VALUES ('$nama_tempat', '$alamat', '$lat', '$long', '$id_icon')";
 
     if (mysqli_query($koneksi, $insert)) {
         echo "
@@ -66,7 +67,6 @@
 Medicinal Plants in Papua</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -136,7 +136,20 @@ Medicinal Plants in Papua </h2>
                             <label for="long" class="form-label">Longitude</label>
                             <input type="text" class="form-control" id="long" name="long" required placeholder="masukan nama longitude">
                         </div>
-                            
+                       
+                        <div class="mb-3">
+                            <label for="" class="form-label">Icon</label>
+                            <select class="form-select form-select-lg" name="id_icon" id="">
+                                <option value="2">Daun merah </option>
+                                <option value="1">Pohon hijau</option>
+                            </select>
+                        </div>
+                        <!-- <div class="form-check mb-5">
+                        <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="label">
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Tambah nama tempat pada icon 
+                        </label>
+                        </div> -->
                         <button class="btn btn-primary" name="simpan" type="submit">Simpan</button>
                     </form>
                         
@@ -174,117 +187,72 @@ Medicinal Plants in Papua </h2>
         </div>
     </div>
 
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+    <script src="js/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min"> </script> -->
 <script>
+function initMap() {
+  
+       var mapCanvas = document.getElementById('map');      
+       // Center maps
+       var myLatlng = new google.maps.LatLng(-4.8591005,133.311057);
+       // Map Options    
+       var mapOptions = {
+         zoom: 6,
+         center: myLatlng
+       };
+       
+       // Create the Map
+       map = new google.maps.Map(mapCanvas, mapOptions);
 
-    function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-    center: new google.maps.LatLng(-4.8591005,133.311057),
-    zoom: 6
-    });
-    var infoWindow = new google.maps.InfoWindow;
+       var infoWindow = new google.maps.InfoWindow;
 
-  downloadUrl('http://localhost/gmaps/data-json.php', function(data) {
+       //request data from data-maps.php
+       $.getJSON( "data-maps.php", function( data ) {
+        console.info(data)
+         //parsing data json 
+         $.each( data, function( i, item ) {
 
-    var markers=JSON.parse(data.responseText);
+           //set point marker
+           var point = new google.maps.LatLng(
+                       parseFloat(item.lat),
+                       parseFloat(item.long));
 
-    markers.forEach(function(element) {          
-        var id = element.id;
-        var nama_tempat = element.nama_tempat;
-        var alamat = element.alamat;
-        var point = new google.maps.LatLng(
-            parseFloat(element.lat),
-            parseFloat(element.long));
+           //create pop up info header
+           var infowincontent = document.createElement('div');
+           var strong = document.createElement('strong');
+           strong.textContent = item.nama_tempat;
+           infowincontent.appendChild(strong);
+           
+           infowincontent.appendChild(document.createElement('br'));
 
-        // var infowincontent = document.createElement('div');
-        // infowincontent.classList.add("bg-danger");
-        // var strong = document.createElement('strong');
-        // strong.textContent = nama_tempat
-        // infowincontent.appendChild(strong);
-        // infowincontent.appendChild(document.createElement('br'));
+           //create pop up info content
+           var text = document.createElement('text');
+           text.textContent = item.alamat
+           infowincontent.appendChild(text);
 
-    
-        // var marker = new google.maps.Marker({
-        //   map: map,
-        //   position: point
-        // });
-        // marker.addListener('click', function() {
-        //   infoWindow.setContent(infowincontent);
-        //   infoWindow.open(map, marker);
-        // });
+           //marker option
+           var marker = new google.maps.Marker({
+               map: map,
+               position: point,
+               icon: item.image_path
+           });
 
-        var string = `Keterangan <br>`+ nama_tempat + `<br> <a href="http://">Link</a>`;    
+           //popup info 
+           marker.addListener('click', function() {
+             infoWindow.setContent(infowincontent);
+             infoWindow.open(map, marker);
+           });
 
-            // membuat objek info window
-          var infowindow = new google.maps.InfoWindow({
-          content: string,
-          position: point
-        });
-        
-        // tampilkan info window pada peta
-        infowindow.open(map);
-    });
-    
-  });
-}
-    function downloadUrl(url, callback) {
-    var request = window.ActiveXObject ?
-        new ActiveXObject('Microsoft.XMLHTTP') :
-        new XMLHttpRequest;
+         });
+         
+       });
+       }
+ 
 
-          downloadUrl('https://gis.sacode.web.id/data-json.php', function(data) {
-
-            var markers=JSON.parse(data.responseText);
-
-            markers.forEach(function(element) {          
-                var id_pariwisata = element.id_pariwisata;
-                var nama_pariwisata = element.nama_pariwisata;
-                var alamat = element.alamat;
-                var point = new google.maps.LatLng(
-                    parseFloat(element.lat),
-                    parseFloat(element.long));
-
-                var infowincontent = document.createElement('div');
-                var strong = document.createElement('strong');
-                strong.textContent = nama_pariwisata
-                infowincontent.appendChild(strong);
-                infowincontent.appendChild(document.createElement('br'));
-
-                var text = document.createElement('text');
-                text.textContent = alamat
-                infowincontent.appendChild(text);
-                var marker = new google.maps.Marker({
-                  map: map,
-                  position: point
-                });
-                marker.addListener('click', function() {
-                  infoWindow.setContent(infowincontent);
-                  infoWindow.open(map, marker);
-                });
-            });
-            
-          });
-        }
-      function downloadUrl(url, callback) {
-        var request = window.ActiveXObject ?
-            new ActiveXObject('Microsoft.XMLHTTP') :
-            new XMLHttpRequest;
-
-        request.onreadystatechange = function() {
-          if (request.readyState == 4) {
-            request.onreadystatechange = doNothing;
-            callback(request, request.status);
-          }
-        };
-
-        request.open('GET', url, true);
-        request.send(null);
-      }
-
-      function doNothing() {}
     </script>
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnEURuYDaHRh-CG1gwhXa-ozT72ugHbc&callback=initMap"
     async defer></script>

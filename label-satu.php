@@ -177,7 +177,6 @@ Medicinal Plants in Papua </h2>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
 <script>
 
     function initMap() {
@@ -187,7 +186,7 @@ Medicinal Plants in Papua </h2>
     });
     var infoWindow = new google.maps.InfoWindow;
 
-  downloadUrl('http://localhost/gmaps/data-json.php', function(data) {
+  downloadUrl('https://gis.sacode.web.id/data-json.php', function(data) {
 
     var markers=JSON.parse(data.responseText);
 
@@ -235,57 +234,19 @@ Medicinal Plants in Papua </h2>
         new ActiveXObject('Microsoft.XMLHTTP') :
         new XMLHttpRequest;
 
-          downloadUrl('https://gis.sacode.web.id/data-json.php', function(data) {
+    request.onreadystatechange = function() {
+    if (request.readyState == 4) {
+        request.onreadystatechange = doNothing;
+        callback(request, request.status);
+    }
+    };
 
-            var markers=JSON.parse(data.responseText);
+    request.open('GET', url, true);
+    request.send(null);
+    }
 
-            markers.forEach(function(element) {          
-                var id_pariwisata = element.id_pariwisata;
-                var nama_pariwisata = element.nama_pariwisata;
-                var alamat = element.alamat;
-                var point = new google.maps.LatLng(
-                    parseFloat(element.lat),
-                    parseFloat(element.long));
+    function doNothing() {}
+</script>
 
-                var infowincontent = document.createElement('div');
-                var strong = document.createElement('strong');
-                strong.textContent = nama_pariwisata
-                infowincontent.appendChild(strong);
-                infowincontent.appendChild(document.createElement('br'));
-
-                var text = document.createElement('text');
-                text.textContent = alamat
-                infowincontent.appendChild(text);
-                var marker = new google.maps.Marker({
-                  map: map,
-                  position: point
-                });
-                marker.addListener('click', function() {
-                  infoWindow.setContent(infowincontent);
-                  infoWindow.open(map, marker);
-                });
-            });
-            
-          });
-        }
-      function downloadUrl(url, callback) {
-        var request = window.ActiveXObject ?
-            new ActiveXObject('Microsoft.XMLHTTP') :
-            new XMLHttpRequest;
-
-        request.onreadystatechange = function() {
-          if (request.readyState == 4) {
-            request.onreadystatechange = doNothing;
-            callback(request, request.status);
-          }
-        };
-
-        request.open('GET', url, true);
-        request.send(null);
-      }
-
-      function doNothing() {}
-    </script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnEURuYDaHRh-CG1gwhXa-ozT72ugHbc&callback=initMap"
-    async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSnEURuYDaHRh-CG1gwhXa-ozT72ugHbc&callback=initMap" async defer></script>
 </html>
