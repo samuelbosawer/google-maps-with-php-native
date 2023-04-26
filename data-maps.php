@@ -2,7 +2,8 @@
 
  header('Content-Type: application/json; charset=utf8');
  
- $con = mysqli_connect("feq50y.stackhero-network.com","root","mU2BSaSELn4jz7jBLRW4Hz0dgFVjKB0x","db_gis");
+//  $con = mysqli_connect("feq50y.stackhero-network.com","root","mU2BSaSELn4jz7jBLRW4Hz0dgFVjKB0x","db_gis");
+ $con = mysqli_connect("localhost","sakodeko_gis","sakodeko_gis","sakodeko_gis");
 
  //query untuk menampilkan data maps dan icon image
  $sql="SELECT
